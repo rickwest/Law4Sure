@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+
+  "name": "law4sure extension",
+  "description": "This extension helps protect you from phishing sites. The shield turns green when you visit a verified legal website.",
+  "version": "0.1",
+
+  "browser_action": {
+    "default_icon": "justice.png",
+    "default_popup": "popup.html",
+    "default_title": "Either this is not a law firm website or it has not been verified by us."
+  },
+  "permissions": [
+    "activeTab",
+    "tabs"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
