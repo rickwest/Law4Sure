@@ -1,24 +1,30 @@
 // Copyright (c) 2018 Richard West. All rights reserved.
 
 /**
- *
- * Listen for a message being sent from content script and handle as appropriate
+ * Listen for a messages being sent from content script and handle as appropriate
  */
 chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.action === "checkUrl") {
-        getCurrentTabUrl(function(url) {
-            // Do api request to check url
-
-            if (url == 'https://www.google.co.uk/') {
-                chrome.browserAction.setTitle({title: 'This domain has been verified by us'});
-                chrome.browserAction.setIcon({path: 'justice-g.png'});
-            } else {
-                chrome.browserAction.setTitle({title: 'Either this is not a law firm website or it has not been verified by us.'});
-                chrome.browserAction.setIcon({path: 'justice.png'});
-            }
-        });
+        getCurrentTabUrl(urlVerificationRequest);
     }
 });
+
+
+/**
+ * Listen for tab being updated
+ */
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
+    getCurrentTabUrl(urlVerificationRequest);
+});
+
+
+/**
+ * Listen for new tab being activated
+ */
+chrome.tabs.onActivated.addListener(function() {
+    getCurrentTabUrl(urlVerificationRequest);
+});
+
 
 /**
  * Get the current URL.
@@ -42,18 +48,18 @@ function getCurrentTabUrl(callback) {
         // exactly one tab.
         var tab = tabs[0];
 
-    // A tab is a plain object that provides information about the tab.
-    // See https://developer.chrome.com/extensions/tabs#type-Tab
-    var url = tab.url;
+        // A tab is a plain object that provides information about the tab.
+        // See https://developer.chrome.com/extensions/tabs#type-Tab
+        var url = tab.url;
 
-    // tab.url is only available if the "activeTab" permission is declared.
-    // If you want to see the URL of other tabs (e.g. after removing active:true
-    // from |queryInfo|), then the "tabs" permission is required to see their
-    // "url" properties.
-    console.assert(typeof url == 'string', 'tab.url should be a string');
+        // tab.url is only available if the "activeTab" permission is declared.
+        // If you want to see the URL of other tabs (e.g. after removing active:true
+        // from |queryInfo|), then the "tabs" permission is required to see their
+        // "url" properties.
+        console.assert(typeof url == 'string', 'tab.url should be a string');
 
-    callback(url);
-});
+        callback(url);
+    });
 
     // Most methods of the Chrome extension APIs are asynchronous. This means that
     // you CANNOT do something like this:
@@ -63,4 +69,16 @@ function getCurrentTabUrl(callback) {
     //   url = tabs[0].url;
     // });
     // alert(url); // Shows "undefined", because chrome.tabs.query is async.
+}
+
+function urlVerificationRequest(url) {
+    // Do api request to check url
+
+    if (url == 'https://www.google.co.uk/') {
+        chrome.browserAction.setTitle({title: 'This domain has been verified by us'});
+        chrome.browserAction.setIcon({path: 'justice-g.png'});
+    } else {
+        chrome.browserAction.setTitle({title: 'Either this is not a law firm website or it has not been verified by us.'});
+        chrome.browserAction.setIcon({path: 'justice.png'});
+    }
 }
