@@ -1,0 +1,41 @@
+.law4sure-website-annotation-shift {
+    padding-top: 50px;
+}
+
+.law4sure-website-annotation-wrapper {
+    background-color: rgb(0, 170, 107);
+    color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px;
+    display: none;
+    width: 100%;
+    height: 50px;
+    top: 0px;
+    left: 0px;
+    position: fixed;
+    text-align: center;
+    z-index: 2147483646;
+    font-weight: 500;
+    font-family: Montserrat, Verdana, Geneva, sans-serif;
+    font-size: 14px;
+    vertical-align: middle;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.law4sure-website-annotation-wrapper .law4sure-website-annotation-close-message {
+    display: inline-block;
+    cursor: pointer;
+    line-height: 50px;
+    font-size: 12px;
+    position: absolute;
+    right: 30px;
+    margin: 0px;
+    padding: 0px;
+    text-decoration: underline;
+}
+
+.law4sure-website-annotation-wrapper span {
+    line-height: 50px;
+}

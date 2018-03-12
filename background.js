@@ -75,8 +75,31 @@ function urlVerificationRequest(url) {
     // Do api request to check url
 
     if (url == 'https://www.google.co.uk/') {
-        chrome.browserAction.setTitle({title: 'This domain has been verified by us'});
-        chrome.browserAction.setIcon({path: 'justice-g.png'});
+
+        chrome.browserAction.setTitle({
+            title: 'This domain has been verified by us'
+        });
+
+        chrome.browserAction.setIcon({
+            path: 'justice-g.png'
+        });
+
+
+        chrome.storage.sync.get('showBanner', function(choice) {
+            if(choice.showBanner == 'yes') {
+                // See https://developer.chrome.com/extensions/tabs#method-executeScript.
+                // chrome.tabs.executeScript allows us to programmatically inject JavaScript
+                // into a page. Since we omit the optional first argument "tabId", the script
+                // is inserted into the active tab of the current window, which serves as the
+                // default.
+                chrome.tabs.executeScript({
+                    file: 'banner.js'
+                });
+                chrome.tabs.insertCSS({
+                    file: 'banner.css'
+                })
+            }
+        });
     } else {
         chrome.browserAction.setTitle({title: 'Either this is not a law firm website or it has not been verified by us.'});
         chrome.browserAction.setIcon({path: 'justice.png'});
