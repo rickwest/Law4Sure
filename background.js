@@ -81,7 +81,7 @@ function urlVerificationRequest(url) {
         });
 
         chrome.browserAction.setIcon({
-            path: 'justice-g.png'
+            path: 'justice-safe.png'
         });
 
 
@@ -93,12 +93,27 @@ function urlVerificationRequest(url) {
                 // is inserted into the active tab of the current window, which serves as the
                 // default.
                 chrome.tabs.executeScript({
-                    file: 'banner.js'
+                    file: 'banner-safe.js'
                 });
                 chrome.tabs.insertCSS({
                     file: 'banner.css'
                 })
             }
+        });
+    } else if (url == 'https://tonic.works/') {
+        chrome.browserAction.setTitle({
+            title: 'This domain has been identified as fraudulent. Proceed with caution.'
+        });
+
+        chrome.browserAction.setIcon({
+            path: 'justice-danger.png'
+        });
+
+        chrome.tabs.executeScript({
+            file: 'banner-danger.js'
+        });
+        chrome.tabs.insertCSS({
+            file: 'banner.css'
         });
     } else {
         chrome.browserAction.setTitle({title: 'Either this is not a law firm website or it has not been verified by us.'});

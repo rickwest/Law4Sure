@@ -3,7 +3,6 @@
 }
 
 .law4sure-website-annotation-wrapper {
-    background-color: rgb(0, 170, 107);
     color: rgb(255, 255, 255);
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px;
     display: none;
@@ -38,4 +37,12 @@
 
 .law4sure-website-annotation-wrapper span {
     line-height: 50px;
+}
+
+.law4sure-safe {
+    background-color: rgb(0, 170, 107);
+}
+
+.law4sure-danger {
+    background-color: rgb(228, 0, 61);
 }
